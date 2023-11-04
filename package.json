@@ -1,0 +1,28 @@
+{
+  "name": "express-postgres-todo",
+  "version": "1.0.0",
+  "description": "todo application backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SristiMondal/node-express-postgres-todo.git"
+  },
+  "author": "Sristi Mondal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SristiMondal/node-express-postgres-todo/issues"
+  },
+  "homepage": "https://github.com/SristiMondal/node-express-postgres-todo#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3"
+  }
+}
