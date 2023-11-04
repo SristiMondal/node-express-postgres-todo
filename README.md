@@ -1,2 +1,2 @@
 # node-express-postgres-todo
-My first backend application
+My first backend application.
