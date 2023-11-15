@@ -1,8 +1,11 @@
 const express = require("express");
+const { connectDB } = require("./config/dbConfig");
 
 const app = express();
 app.use(express.json());
 PORT = process.env.PORT || 8080;
+
+connectDB();
 
 app.use("/api/todo", require("./routes/todoRoutes"));
 
