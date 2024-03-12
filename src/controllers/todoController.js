@@ -1,16 +1,16 @@
 const { v4: uuidv4 } = require("uuid");
+const Task = require("../models/todoModel");
 
-let arr = [];
-
-const getTodoList = (request, response, next) => {
-  response.send({ success: true, data: arr });
+const getTodoList = async (request, response, next) => {
+  const list = await Task.findAll();
+  response.send({ success: true, data: list });
 };
 
-const getTodoById = (request, response, next) => {
+const getTodoById = async (request, response, next) => {
   if (request.params.id) {
-    let filteredArr = arr.filter((cur) => cur.id == request.params.id);
-    if (filteredArr[0]) {
-      response.send({ success: true, data: filteredArr[0] });
+    const obj = await Task.findByPk(request.params.id);
+    if (obj) {
+      response.send({ success: true, data: obj });
     } else {
       response.send({
         success: false,
@@ -22,33 +22,47 @@ const getTodoById = (request, response, next) => {
   }
 };
 
-const addTodoData = (request, response, next) => {
+const addTodoData = async (request, response, next) => {
   if (request.body) {
     let obj = request.body;
-    obj.id = uuidv4();
-    arr.push(obj);
-    response.send({ success: true, data: obj });
+    const newTask = await Task.create(obj);
+    response.send({ success: true, data: newTask });
   } else {
     response.send({ success: false, message: "operation failed" });
   }
 };
 
-const updateTodoData = (request, response, next) => {
+const updateTodoData = async (request, response, next) => {
   const id = request.params.id;
   if (id) {
-    arr = arr.filter((cur) => cur.id != id);
-    arr.push(request.body);
-    response.send({ success: true, data: request.body });
+    const obj = await Task.findOne({ where: { id: id } });
+    if (obj) {
+      const updatedObj = await obj.update(request.body);
+      response.send({ success: true, data: updatedObj });
+    } else {
+      response.send({
+        success: true,
+        message: `no data available with id : ${id}`,
+      });
+    }
   } else {
     response.send({ success: false, message: "operation failed" });
   }
 };
 
-const deleteTodoData = (request, response, next) => {
+const deleteTodoData = async (request, response, next) => {
   let id = request.params.id;
   if (id) {
-    arr = arr.filter((cur) => cur.id != id);
-    response.send({ success: true, message: "data deleted successfully" });
+    const obj = await Task.findOne({ where: { id: id } });
+    if (obj) {
+      await obj.destroy();
+      response.send({ success: true, message: "data deleted successfully" });
+    } else {
+      response.send({
+        success: true,
+        message: `no data available with id : ${id}`,
+      });
+    }
   } else {
     response.send({ success: false, message: "operation failed" });
   }

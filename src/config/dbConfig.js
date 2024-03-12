@@ -6,7 +6,7 @@ const sequelize = new Sequelize(
   "root", //password
   {
     host: "localhost", //host
-    port: "54320", //host port
+    port: "5432", //host port
     dialect: "postgres", //communication bridge
   }
 );
