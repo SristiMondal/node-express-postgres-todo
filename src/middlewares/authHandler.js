@@ -30,7 +30,7 @@ const verifyToken = async (req, res, next) => {
 
 const generateToken = async (userId) => {
   const secretKey = crypto.randomBytes(32).toString("hex");
-  const token = jwt.sign({ userId }, secretKey, { expiresIn: "1m" });
+  const token = jwt.sign({ userId }, secretKey, { expiresIn: "30d" });
   await redisClient.set(token, secretKey);
   return token;
 };

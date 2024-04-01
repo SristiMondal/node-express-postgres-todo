@@ -23,7 +23,7 @@ const getTodoById = async (request, response, next) => {
 };
 
 const addTodoData = async (request, response, next) => {
-  if (request.body) {
+  if (request.body && request.body.name) {
     let obj = request.body;
     const newTask = await Task.create(obj);
     response.send({ success: true, data: newTask });
